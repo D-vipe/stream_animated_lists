@@ -1,2 +1,2 @@
-## 0.0.1
-- initial release with SliverAnimatedList widget implementation
+## 1.0.0
+- initial release with SliverAnimatedList and AnimatedList widget implementations
