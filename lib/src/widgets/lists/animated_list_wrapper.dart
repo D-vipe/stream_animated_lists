@@ -14,7 +14,7 @@ class AnimatedListWrapper extends StatefulWidget {
   final Duration removeAnimationDuration;
   final VoidCallback initLoadingState;
   final bool isSeparated;
-  final Widget separator;
+  final Widget separatorWidget;
 
   const AnimatedListWrapper({
     super.key,
@@ -27,7 +27,7 @@ class AnimatedListWrapper extends StatefulWidget {
     this.animationDuration = const Duration(milliseconds: 400),
     this.removeAnimationDuration = const Duration(milliseconds: 800),
     this.isSeparated = false,
-    this.separator = const Divider(
+    this.separatorWidget = const Divider(
       height: 2.0,
     ),
   });
@@ -52,8 +52,10 @@ class _AnimatedListWrapperState extends State<AnimatedListWrapper> {
       removeAnimationDuration: widget.removeAnimationDuration,
       animationType: widget.animationType,
       shimmerWidget: widget.shimmerWidget,
+      separatorWidget: widget.separatorWidget,
       removeAnimationType: widget.removeAnimationType,
       items: widget.items,
+      callSetState: () => setState(() {}),
     );
 
     _eventSubscription = widget.eventStream.listen(listUtils.eventListener);
@@ -73,28 +75,8 @@ class _AnimatedListWrapperState extends State<AnimatedListWrapper> {
             key: _listKey,
             initialItemCount: listUtils.list!.length,
             itemBuilder: listUtils.buildItem,
-            separatorBuilder: (_, __, animation) {
-              return AnimatedOpacity(
-                duration: const Duration(milliseconds: 400),
-                opacity: Tween<double>(
-                  begin: 0.0,
-                  end: 1.0,
-                )
-                    .animate(
-                      CurvedAnimation(
-                        parent: animation,
-                        curve: const Interval(0.0, 1.0),
-                      ),
-                    )
-                    .value,
-                child: widget.separator,
-              );
-            },
-            removedSeparatorBuilder: (_, __, animation) => AnimatedOpacity(
-              duration: const Duration(milliseconds: 400),
-              opacity: animation.value,
-              child: widget.separator,
-            ),
+            separatorBuilder: listUtils.buildSeparator,
+            removedSeparatorBuilder: listUtils.buildRemovedSeparator,
           )
         : AnimatedList(
             key: _listKey,

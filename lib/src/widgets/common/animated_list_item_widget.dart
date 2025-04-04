@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stream_animated_lists/stream_animated_lists.dart';
 
-
 class AnimatedListItemWidget extends StatelessWidget {
   const AnimatedListItemWidget({
     super.key,
@@ -36,9 +35,9 @@ class AnimatedListItemWidget extends StatelessWidget {
   }
 
   Offset _getAnimationItemFromAnimationType() => switch (animationType) {
-        ListItemAnimationType.vertical => Offset(0.0, 1.0 * (_reduceIndex(index) + 1.75)),
-        ListItemAnimationType.rtl => Offset(1.0 * (_reduceIndex(index) + 1.75), 0.0),
-        ListItemAnimationType.ltr => Offset(-1.0 * (_reduceIndex(index) + 1.75), 0.0),
+        ListItemAnimationType.vertical => Offset(0.0, 1.0 * (_reduceIndex(index) + 1.5)),
+        ListItemAnimationType.rtl => Offset(1.0 * (_reduceIndex(index) + 2.25), 0.0),
+        ListItemAnimationType.ltr => Offset(-1.0 * (_reduceIndex(index) + 2.25), 0.0),
         _ => Offset(0.0, 1.0 * (_reduceIndex(index) + 1.75)),
       };
 

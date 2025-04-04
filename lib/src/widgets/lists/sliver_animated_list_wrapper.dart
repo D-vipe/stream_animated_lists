@@ -49,6 +49,7 @@ class _SliverAnimatedListWrapperState extends State<SliverAnimatedListWrapper> {
       shimmerWidget: widget.shimmerWidget,
       removeAnimationType: widget.removeAnimationType,
       items: widget.items,
+      callSetState: () => setState(() {}),
     );
 
     _eventSubscription = widget.eventStream.listen(listUtils.eventListener);
