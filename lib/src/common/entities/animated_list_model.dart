@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:stream_animated_lists/src/common/typedefs/tl_animated_list_type_defs.dart';
+import 'package:stream_animated_lists/src/common/entities/list_model.dart';
 
-class ListModel<E> {
-  ListModel({required this.listKey, required this.removedItemBuilder, Iterable<E>? initialItems})
-      : items = List<E>.from(initialItems ?? <E>[]);
 
-  final GlobalKey<AnimatedListState> listKey;
-  final RemovedItemBuilder<E> removedItemBuilder;
-  final List<E> items;
+class AnimatedListModel<E> extends ListModel<E> {
+  AnimatedListModel(
+      {required this.globalKey, Iterable<E>? initialItems, required super.removedItemBuilder})
+      : super(listKey: globalKey);
 
-  AnimatedListState get _animatedList => listKey.currentState!;
+  final GlobalKey<AnimatedListState> globalKey;
 
+  AnimatedListState get _animatedList => globalKey.currentState!;
+
+  @override
   void insert(int index, E item, Duration animationDuration) {
     items.insert(index, item);
     _animatedList.insertItem(index, duration: animationDuration);

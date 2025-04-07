@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:stream_animated_lists/src/common/entities/animated_list_model.dart';
 import 'package:stream_animated_lists/src/common/entities/animated_sliver_list_model.dart';
+import 'package:stream_animated_lists/src/common/entities/list_model.dart';
 import 'package:stream_animated_lists/src/widgets/common/animated_item_switcher_widget.dart';
 import 'package:stream_animated_lists/src/widgets/common/animated_list_item_widget.dart';
 import 'package:stream_animated_lists/src/widgets/common/animated_separator_widget.dart';
 import 'package:stream_animated_lists/stream_animated_lists.dart';
 
+abstract class AnimatedListUtils {
+  late ListModel<AnimatedListItem>? list;
+  
+}
+
+
 class AnimatedListUtils {
   late ListModel<AnimatedListItem>? list;
-  late SliverListModel<AnimatedListItem>? sliverList;
-  final GlobalKey<SliverAnimatedListState>? _sliverListKey;
-  final GlobalKey<AnimatedListState>? _listKey;
+  // late SliverListModel<AnimatedListItem>? sliverList;
+  // final GlobalKey<SliverAnimatedListState>? _sliverListKey;
+  // final GlobalKey<AnimatedListState>? _listKey;
   final List<AnimatedListItem> items;
   final Duration animationDuration;
   final Duration removeAnimationDuration;

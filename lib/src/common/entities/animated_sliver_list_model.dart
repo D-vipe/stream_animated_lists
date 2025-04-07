@@ -8,29 +8,30 @@
 // mutate the list must make the same changes to the animated list in terms
 // of [AnimatedListState.insertItem] and [AnimatedList.removeItem].
 import 'package:flutter/material.dart';
+import 'package:stream_animated_lists/src/common/entities/list_model.dart';
 
-import '../typedefs/tl_animated_list_type_defs.dart';
+class SliverListModel<E> extends ListModel<E> {
+  SliverListModel(
+      {required this.globalKey, Iterable<E>? initialItems, required super.removedItemBuilder})
+      : super(sliverListKey: globalKey);
 
-class SliverListModel<E> {
-  SliverListModel({required this.listKey, required this.removedItemBuilder, Iterable<E>? initialItems})
-      : items = List<E>.from(initialItems ?? <E>[]);
+  final GlobalKey<SliverAnimatedListState> globalKey;
 
-  final GlobalKey<SliverAnimatedListState> listKey;
-  final RemovedItemBuilder<E> removedItemBuilder;
-  final List<E> items;
+  SliverAnimatedListState get _animatedList => globalKey.currentState!;
 
-  SliverAnimatedListState get _animatedList => listKey.currentState!;
-
+  @override
   void insert(int index, E item, Duration animationDuration) {
     items.insert(index, item);
     _animatedList.insertItem(index, duration: animationDuration);
   }
 
+  @override
   void insertAll(int index, Iterable<E> newItems, Duration animationDuration) {
     items.insertAll(index, newItems);
     _animatedList.insertAllItems(index, newItems.length, duration: animationDuration);
   }
 
+  @override
   E removeAt(int index, Duration animationDuration) {
     final E removedItem = items.removeAt(index);
     if (removedItem != null) {
@@ -43,9 +44,4 @@ class SliverListModel<E> {
     return removedItem;
   }
 
-  int get length => items.length;
-
-  E operator [](int index) => items[index];
-
-  int indexOf(E item) => items.indexOf(item);
 }
