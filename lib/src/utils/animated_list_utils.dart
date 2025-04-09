@@ -171,8 +171,11 @@ class AnimatedListUtils {
       shimmerWidget != null
           ? AnimatedListItemWidget(
               animation: animation,
-              animationType: animationType,
+              animationType:
+                  (_isSliver ? sliverList![index].animationType : list![index].animationType) ??
+                      animationType,
               index: index,
+              isInserting: _isSliver ? sliverList![index].isInserting : list![index].isInserting,
               child: AnimatedItemSwitcher(
                 shimmer: shimmerWidget!,
                 showShimmer: _isSliver ? sliverList![index].isLoading : list![index].isLoading,
@@ -182,7 +185,10 @@ class AnimatedListUtils {
           : AnimatedListItemWidget(
               animation: animation,
               index: index,
-              animationType: animationType,
+              animationType:
+                  (_isSliver ? sliverList![index].animationType : list![index].animationType) ??
+                      animationType,
+              isInserting: _isSliver ? sliverList![index].isInserting : list![index].isInserting,
               child: _isSliver ? sliverList![index] : list![index],
             );
 

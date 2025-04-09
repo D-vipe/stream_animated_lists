@@ -9,6 +9,7 @@ class AnimatedListItemWidget extends StatelessWidget {
     required this.child,
     this.animationType = ListItemAnimationType.base,
     this.isRemoving = false,
+    this.isInserting = false,
   });
 
   final int index;
@@ -16,6 +17,7 @@ class AnimatedListItemWidget extends StatelessWidget {
   final Animation<double> animation;
   final ListItemAnimationType animationType;
   final bool isRemoving;
+  final bool isInserting;
 
   int _reduceIndex(int count) {
     if (count <= 20) {
@@ -52,7 +54,7 @@ class AnimatedListItemWidget extends StatelessWidget {
         );
 
       default:
-        return isRemoving
+        return isRemoving || isInserting
             ? SizeTransition(
                 sizeFactor: animation,
                 child: SlideTransition(
