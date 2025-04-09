@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:stream_animated_lists/src/utils/animated_list_utils.dart';
 import 'package:stream_animated_lists/stream_animated_lists.dart';
 
@@ -15,6 +16,14 @@ class AnimatedListWrapper extends StatefulWidget {
   final VoidCallback initLoadingState;
   final bool isSeparated;
   final Widget separatorWidget;
+  final ScrollController? scrollController;
+  final EdgeInsetsGeometry? padding;
+  final ScrollDirection? scrollDirection;
+  final bool? primaryScroll;
+  final bool reverse;
+  final ScrollPhysics? physics;
+  final bool shrinkWrap;
+  final Clip clipBehavior;
 
   const AnimatedListWrapper({
     super.key,
@@ -30,6 +39,14 @@ class AnimatedListWrapper extends StatefulWidget {
     this.separatorWidget = const Divider(
       height: 2.0,
     ),
+    this.scrollController,
+    this.padding,
+    this.scrollDirection,
+    this.primaryScroll,
+    this.reverse = false,
+    this.physics,
+    this.shrinkWrap = false,
+    this.clipBehavior = Clip.hardEdge,
   });
 
   @override
@@ -55,7 +72,9 @@ class _AnimatedListWrapperState extends State<AnimatedListWrapper> {
       separatorWidget: widget.separatorWidget,
       removeAnimationType: widget.removeAnimationType,
       items: widget.items,
-      callSetState: () => setState(() {}),
+      callSetState: () => setState(
+        () {},
+      ),
     );
 
     _eventSubscription = widget.eventStream.listen(listUtils.eventListener);
@@ -77,11 +96,25 @@ class _AnimatedListWrapperState extends State<AnimatedListWrapper> {
             itemBuilder: listUtils.buildItem,
             separatorBuilder: listUtils.buildSeparator,
             removedSeparatorBuilder: listUtils.buildRemovedSeparator,
+            physics: widget.physics,
+            controller: widget.scrollController,
+            padding: widget.padding,
+            primary: widget.primaryScroll,
+            reverse: widget.reverse,
+            shrinkWrap: widget.shrinkWrap,
+            clipBehavior: widget.clipBehavior,
           )
         : AnimatedList(
             key: _listKey,
             initialItemCount: listUtils.list!.length,
             itemBuilder: listUtils.buildItem,
+            physics: widget.physics,
+            controller: widget.scrollController,
+            padding: widget.padding,
+            primary: widget.primaryScroll,
+            reverse: widget.reverse,
+            shrinkWrap: widget.shrinkWrap,
+            clipBehavior: widget.clipBehavior,
           );
   }
 }

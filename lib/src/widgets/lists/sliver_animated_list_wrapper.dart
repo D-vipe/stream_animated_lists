@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:stream_animated_lists/src/utils/animated_list_utils.dart';
 import 'package:stream_animated_lists/stream_animated_lists.dart';
 
@@ -13,6 +14,14 @@ class SliverAnimatedListWrapper extends StatefulWidget {
   final Duration animationDuration;
   final Duration removeAnimationDuration;
   final VoidCallback initLoadingState;
+  final ScrollController? scrollController;
+  final EdgeInsetsGeometry? padding;
+  final ScrollDirection? scrollDirection;
+  final bool? primaryScroll;
+  final bool reverse;
+  final ScrollPhysics? physics;
+  final bool shrinkWrap;
+  final Clip clipBehavior;
 
   const SliverAnimatedListWrapper({
     super.key,
@@ -24,6 +33,14 @@ class SliverAnimatedListWrapper extends StatefulWidget {
     this.removeAnimationType = ListItemAnimationType.ltr,
     this.animationDuration = const Duration(milliseconds: 400),
     this.removeAnimationDuration = const Duration(milliseconds: 800),
+    this.scrollController,
+    this.padding,
+    this.scrollDirection,
+    this.primaryScroll,
+    this.reverse = false,
+    this.physics,
+    this.shrinkWrap = false,
+    this.clipBehavior = Clip.hardEdge,
   });
 
   @override

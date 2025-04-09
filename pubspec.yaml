@@ -1,6 +1,6 @@
 name: stream_animated_lists
 description: "Package based on AnimatedList / AnimatedGrid and their Sliver analogues"
-version: 1.0.0
+version: 1.0.1
 
 environment:
   sdk: ^3.6.1
